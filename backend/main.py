@@ -18,16 +18,19 @@ app.add_middleware(
 
 job_store = {}
 VALID_EXTENSIONS = {".mp4"}
-VIDEO_DIR = "videos"
-os.makedirs(VIDEO_DIR, exist_ok=True)
+RAW_VIDEO_DIR = "../frontend/public/videos/raw"
+PROCESSED_VIDEO_DIR = "../frontend/public/videos/processed"
+
+os.makedirs(RAW_VIDEO_DIR, exist_ok=True)
+os.makedirs(PROCESSED_VIDEO_DIR, exist_ok=True)
 
 def process_video(job_id: str):
     job = job_store[job_id]
+    fileName = job["video_filename"]
     input_path = job["video_path"]
-    output_path = os.path.join(VIDEO_DIR, f"{job_id}_processed.mp4")
+    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
 
-    # Convert video format using FFmpeg
-    subprocess.run(["ffmpeg", "-i", input_path, output_path])
+    # TODO: ADD PROCESSING video logic here 
 
     job_store[job_id]["status"] = "completed"
     job_store[job_id]["processed_video_path"] = output_path
@@ -42,14 +45,11 @@ async def upload_video(background_tasks: BackgroundTasks, file: UploadFile = Fil
         raise HTTPException(status_code=400, detail="Only MP4 files are allowed")
 
     job_id = str(uuid.uuid4())  # Generate a unique job ID
-    video_path = os.path.join(VIDEO_DIR, file.filename)
+    video_path = os.path.join(RAW_VIDEO_DIR, file.filename)
 
-    # Save the video file
     with open(video_path, "wb") as f:
         f.write(await file.read())
-    
 
-    # Store job metadata in dictionary
     job_store[job_id] = {
         "status": "processing",
         "video_filename": file.filename,
@@ -58,6 +58,16 @@ async def upload_video(background_tasks: BackgroundTasks, file: UploadFile = Fil
     background_tasks.add_task(process_video, job_id)
 
     return {"job_id": job_id, "message": "Video uploaded and stored successfully"}
+
+@app.get("/list-videos/")
+def list_videos():    
+    raw_videos = [f for f in os.listdir(RAW_VIDEO_DIR) if f.endswith(".mp4")]
+    processed_videos = [f for f in os.listdir(PROCESSED_VIDEO_DIR) if f.endswith(".mp4")]
+
+    return {
+        "raw": raw_videos,
+        "processed": processed_videos
+    }
 
 @app.get("/job/{job_id}")
 def get_job_status(job_id: str):
