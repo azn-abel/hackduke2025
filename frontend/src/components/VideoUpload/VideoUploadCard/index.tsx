@@ -8,13 +8,10 @@ import Text from "@/components/Typography/Text";
 import { useState } from "react";
 
 export default function VideoUploadCard() {
-  const [fileName, setFileName] = useState("");
-
   return (
-    <Card>
+    <Card className="min-w-64">
       <H2 className="text-center">Upload a Video</H2>
-      <Text className="mb-4 text-center">Selected File: {fileName}</Text>
-      <VideoUploadButton setter={setFileName} />
+      <VideoUploadButton />
     </Card>
   );
 }
