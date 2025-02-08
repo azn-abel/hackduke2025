@@ -1,6 +1,6 @@
-const API_URL = "http://127.0.0.1:5000";
+const API_URL = "http://127.0.0.1:8000";
 
-async function uploadVideo(file: File): Promise<void> {
+export async function uploadVideo(file: File): Promise<void> {
   if (!file) {
     console.error("No file selected.");
     return;

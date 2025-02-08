@@ -3,7 +3,18 @@ import os
 from fastapi import *
 import uuid
 import subprocess
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+origins = ["*", "http://localhost:3000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 job_store = {}
 VALID_EXTENSIONS = {".mp4"}
@@ -21,8 +32,10 @@ def process_video(job_id: str):
     job_store[job_id]["status"] = "completed"
     job_store[job_id]["processed_video_path"] = output_path
 
+    print(job_store)
+
 @app.post("/upload-video/") 
-async def upload_video(file: UploadFile = File(...)):
+async def upload_video(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
     file_ext = os.path.splitext(file.filename)[1]
 
     if file_ext.lower() not in VALID_EXTENSIONS:
@@ -34,6 +47,7 @@ async def upload_video(file: UploadFile = File(...)):
     # Save the video file
     with open(video_path, "wb") as f:
         f.write(await file.read())
+    
 
     # Store job metadata in dictionary
     job_store[job_id] = {
@@ -41,7 +55,7 @@ async def upload_video(file: UploadFile = File(...)):
         "video_filename": file.filename,
         "video_path": video_path
     }
-    BackgroundTasks.background_tasks.add_task(process_video, job_id)
+    background_tasks.add_task(process_video, job_id)
 
     return {"job_id": job_id, "message": "Video uploaded and stored successfully"}
 

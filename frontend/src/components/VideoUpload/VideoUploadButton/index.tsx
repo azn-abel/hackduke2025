@@ -1,18 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { Dispatch, ChangeEvent, SetStateAction, useEffect } from "react";
+import { Dispatch, ChangeEvent, SetStateAction, useState } from "react";
+import { uploadVideo } from "@/api/video";
 
 export default function VideoUploadButton({
   setter,
 }: {
   setter: Dispatch<SetStateAction<string>>;
 }) {
+  const [file, setFile] = useState<File | null>();
+
   const useSetter = (e: ChangeEvent<HTMLInputElement>) => {
     const fileName: string = e.target.value;
     const array = fileName.split("\\");
     const file = array[array.length - 1];
     setter(file);
+    if (e.target.files && e.target.files.length > 0) {
+      console.log("uploading");
+      uploadVideo(e.target.files[0]);
+    }
   };
 
   return (
