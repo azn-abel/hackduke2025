@@ -16,12 +16,7 @@ export default function Home() {
         </aside>
         <main className="flex flex-col gap-4 row-start-2 items-center sm:items-start">
           <H2 className="text-4xl">Videos</H2>
-          <VideoDisplay
-            data={{
-              raw: ["/Mini Project 0.mp4", "/Mini Project 0.mp4"],
-              processed: [],
-            }}
-          />
+          <VideoDisplay />
           <Image
             className="dark:invert"
             src="/next.svg"
