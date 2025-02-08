@@ -28,7 +28,7 @@ def process_video(job_id: str):
     job = job_store[job_id]
     fileName = job["video_filename"]
     input_path = job["video_path"]
-    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
+    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName[:-4]}_processed.mp4")
 
     # TODO: ADD PROCESSING video logic here 
 
@@ -60,14 +60,28 @@ async def upload_video(background_tasks: BackgroundTasks, file: UploadFile = Fil
     return {"job_id": job_id, "message": "Video uploaded and stored successfully"}
 
 @app.get("/list-videos/")
-def list_videos():    
-    raw_videos = [f for f in os.listdir(RAW_VIDEO_DIR) if f.endswith(".mp4")]
-    processed_videos = [f for f in os.listdir(PROCESSED_VIDEO_DIR) if f.endswith(".mp4")]
+def list_videos():
 
-    return {
+    raw_videos = []
+    processed_videos = []
+
+    for key, job in job_store.items():
+        if job["status"] == "completed":
+            processed_videos.append({
+                "job_id": key,
+                "video_path": job["processed_video_path"][18:]
+            })
+        raw_videos.append({
+            "job_id": key,
+            "video_path": job["video_path"][18:]
+        })
+
+    output = {
         "raw": raw_videos,
         "processed": processed_videos
     }
+
+    return output
 
 @app.get("/job/{job_id}")
 def get_job_status(job_id: str):

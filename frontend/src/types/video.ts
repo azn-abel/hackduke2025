@@ -1,4 +1,9 @@
+export interface Video {
+  job_id: string;
+  video_path: string;
+}
+
 export interface VideoData {
-  raw: Array<string>;
-  processed: Array<string>;
+  raw: Array<Video>;
+  processed: Array<Video>;
 }
