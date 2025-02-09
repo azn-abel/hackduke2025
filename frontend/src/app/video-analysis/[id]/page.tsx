@@ -41,7 +41,7 @@ export default function Page() {
           <Card className="w-96">
             <H2 className="text-2xl">Raw Video</H2>
             <video
-              src={videoData?.video_path.substring(18)}
+              src={videoData?.video_path?.substring(18)}
               controls
               className="w-96"
             />
@@ -49,7 +49,7 @@ export default function Page() {
           <Card className="w-96">
             <H2 className="text-4xl">Processed Video</H2>
             <video
-              src={videoData?.processed_video_path.substring(18)}
+              src={videoData?.processed_video_path?.substring(18)}
               controls
               className="w-96"
             />
