@@ -36,7 +36,8 @@ def process_video(job_id: str):
     outputAngles = processVideo(input_path, output_path)
     userRequest = ("These are the angles of my relevant body parts during my shot. "
     "Based on these values, and your science-based knowledge as a basketball coach, "
-    "inform me on how I can improve as a player and what my strengths and weaknesses are: \n\n{}"
+    "inform me on how I can improve as a player and what my strengths and weaknesses "
+    "are in concise, but encouraging, plaintext: \n\n{}"
     ).format(str(outputAngles))
     recommendation = generateResponse(userRequest)
 
