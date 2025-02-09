@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-import tensorflow_hub as hub
-import tensorflow as tf
 import pandas as pd
 import math
 import mediapipe as mp
