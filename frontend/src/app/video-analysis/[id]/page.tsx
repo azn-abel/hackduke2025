@@ -32,7 +32,7 @@ export default function Page() {
       <H1 className="p-8 pt-24 text-3xl">Video Analysis</H1>
       <div className="flex flex-row justify-items-center min-h-screen p-8 pt-0 gap-16 font-[family-name:var(--font-geist-sans)]">
         <div className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-          <Card>
+          <Card className="w-96">
             <H2 className="text-2xl">Raw Video</H2>
             <video
               src={videoData?.video_path.substring(18)}
@@ -40,7 +40,7 @@ export default function Page() {
               className="w-96"
             />
           </Card>
-          <Card>
+          <Card className="w-96">
             <H2 className="text-4xl">Processed Video</H2>
             <video
               src={videoData?.processed_video_path.substring(18)}
