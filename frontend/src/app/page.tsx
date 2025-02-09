@@ -15,7 +15,7 @@ export default function Home() {
           <VideoUploadCard />
         </aside>
         <main className="flex flex-col gap-4 row-start-2 items-center sm:items-start">
-          <H2 className="text-4xl">Raw Videos</H2>
+          <H2 className="text-3xl">Videos</H2>
           <VideoDisplay />
         </main>
       </div>

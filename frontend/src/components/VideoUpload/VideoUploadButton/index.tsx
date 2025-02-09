@@ -10,6 +10,9 @@ export default function VideoUploadButton() {
       console.log("uploading");
       uploadVideo(e.target.files[0]);
     }
+    setTimeout(() => {
+      location.reload();
+    }, 200);
   };
 
   return (

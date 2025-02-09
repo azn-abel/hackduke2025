@@ -7,7 +7,7 @@ export default function Card({
 }>) {
   return (
     <article
-      className={`border p-4 rounded-lg font-[family-name:var(--font-geist-sans)] ${className}`}
+      className={`p-4 rounded-lg font-[family-name:var(--font-geist-sans)] bg-[#1E1E1E] ${className}`}
     >
       {children}
     </article>
