@@ -29,7 +29,7 @@ os.makedirs(PROCESSED_VIDEO_DIR, exist_ok=True)
 
 def process_video(job_id: str):
     job = job_store[job_id]
-    fileName = job["video_filename"]
+    fileName = job["video_filename"][:-4]
     input_path = job["video_path"]
     # TODO: ADD PROCESSING video logic here 
     output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
