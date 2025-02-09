@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Card from "@/components/Card";
+import H1 from "@/components/Typography/Headings/H1";
 import H2 from "@/components/Typography/Headings/H2";
 import { getVideo } from "@/api/video";
 import { getAllVideos } from "@/api/video";
@@ -27,24 +28,32 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="flex flex-row justify-items-center min-h-screen p-8 pt-24 gap-16 font-[family-name:var(--font-geist-sans)]">
-      <p className="mt-20">Post: {params.id}</p>
-      <main className="flex flex-col gap-4 row-start-2 items-center sm:items-start">
-        <H2 className="text-4xl">Raw Video</H2>
-        <video
-          src={videoData?.video_path.substring(18)}
-          controls
-          className="max-w-96"
-        ></video>
-        <H2 className="text-4xl">Processed Video</H2>
-        <video
-          src={videoData?.processed_video_path.substring(18)}
-          controls
-          className="max-w-96"
-        ></video>
-      </main>
-      <H2 className="text-4xl">Feedback</H2>
-      <Text>{videoData?.recommendation}</Text>
-    </div>
+    <>
+      <H1 className="p-8 pt-24 text-3xl">Video Analysis</H1>
+      <div className="flex flex-row justify-items-center min-h-screen p-8 pt-0 gap-16 font-[family-name:var(--font-geist-sans)]">
+        <div className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+          <Card>
+            <H2 className="text-2xl">Raw Video</H2>
+            <video
+              src={videoData?.video_path.substring(18)}
+              controls
+              className="w-96"
+            />
+          </Card>
+          <Card>
+            <H2 className="text-4xl">Processed Video</H2>
+            <video
+              src={videoData?.processed_video_path.substring(18)}
+              controls
+              className="w-96"
+            />
+          </Card>
+        </div>
+        <div className="flex flex-col gap-4 row-start-2 items-center sm:items-start">
+          <H2 className="text-3xl">Feedback</H2>
+          <Text>{videoData?.recommendation}</Text>
+        </div>
+      </div>
+    </>
   );
 }
