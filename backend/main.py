@@ -31,12 +31,15 @@ def process_video(job_id: str):
     job = job_store[job_id]
     fileName = job["video_filename"][:-4]
     input_path = job["video_path"]
-    # TODO: ADD PROCESSING video logic here 
-    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
-    processVideo(input_path, output_path)
-    # TODO: ADD PROCESSING video logic here
-    recommendation = "hello"
 
+    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
+    outputAngles = processVideo(input_path, output_path)
+    userRequest = ("These are the angles of my relevant body parts during my shot. "
+    "Based on these values, and your science-based knowledge as a basketball coach, "
+    "inform me on how I can improve as a player and what my strengths and weaknesses "
+    "are in concise, but encouraging, plaintext: \n\n{}"
+    ).format(str(outputAngles))
+    recommendation = generateResponse(userRequest)
 
 
     job_store[job_id]["status"] = "completed"

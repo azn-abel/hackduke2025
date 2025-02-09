@@ -98,7 +98,10 @@ def processVideo(video_path, output_video):
     cv2.destroyAllWindows()
 
     angle_data = np.array(angle_data)
-    preparatory_phase = angle_data[np.argmin(angle_data[:, 2])]  # Min knee angle
+    preparatory_phase = angle_data[np.argmin(angle_data[:, 1])]  # Min elbow angle
     release_phase = angle_data[np.argmax(angle_data[:, 1])]  # Max elbow angle
 
-    return [preparatory_phase, release_phase]
+    preparatory_phase = {"Elbow": preparatory_phase[0], "Knee": preparatory_phase[1], "Ankle": preparatory_phase[2]}
+    release_phase = {"Elbow": release_phase[0], "Knee": release_phase[1], "Ankle": release_phase[2]}
+
+    return {"Preparatory": preparatory_phase, "Release": release_phase}
