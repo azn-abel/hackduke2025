@@ -31,7 +31,7 @@ def process_video(job_id: str):
     # TODO: ADD PROCESSING video logic here 
     output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
     # TODO: ADD PROCESSING video logic here 
-    recommendation = ""
+    recommendation = "hello"
 
 
     job_store[job_id]["status"] = "completed"
@@ -89,4 +89,3 @@ def list_videos():
 @app.get("/job/{job_id}")
 def get_job_status(job_id: str):
     return job_store.get(job_id, {"error": "Job not found"})
-
