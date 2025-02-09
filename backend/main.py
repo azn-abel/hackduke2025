@@ -5,6 +5,7 @@ import uuid
 import subprocess
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
 origins = ["*", "http://localhost:3000"]
@@ -32,6 +33,7 @@ def process_video(job_id: str):
     output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
     # TODO: ADD PROCESSING video logic here 
     recommendation = "hello"
+
 
 
     job_store[job_id]["status"] = "completed"
