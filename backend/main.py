@@ -28,12 +28,15 @@ def process_video(job_id: str):
     job = job_store[job_id]
     fileName = job["video_filename"]
     input_path = job["video_path"]
-    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
-
     # TODO: ADD PROCESSING video logic here 
+    output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
+    # TODO: ADD PROCESSING video logic here 
+    recommendation = ""
+
 
     job_store[job_id]["status"] = "completed"
     job_store[job_id]["processed_video_path"] = output_path
+    job_store[job_id]["recommendation"] = recommendation
 
     print(job_store)
 

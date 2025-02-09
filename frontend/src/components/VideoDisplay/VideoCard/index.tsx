@@ -11,7 +11,7 @@ export default function VideoCard({
   return (
     <Card>
       <H2>{title || "Video"}</H2>
-      <video src={path} controls className="max-w-96"></video>
+      <video src={path} controls className="max-w-96 max-h-96"></video>
     </Card>
   );
 }
