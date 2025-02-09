@@ -18,7 +18,7 @@ def calculate_angle(a, b, c):
     return angle
 
 # processing the video: determining angles of preparatory/release phases and also returning annotated video
-def processVideo(video_path, output_csv, output_video):
+def processVideo(video_path, output_video):
     cap = cv2.VideoCapture(video_path)
 
     # Get video properties
@@ -74,19 +74,13 @@ def processVideo(video_path, output_csv, output_video):
     # Identify preparatory and release phase angles
     preparatory_phase = df.loc[df['Knee Angle'].idxmin()]
     release_phase = df.loc[df['Elbow Angle'].idxmax()]
-    
-    # Save angle data to CSV
-    df.to_csv(output_csv, index=False)
 
-    # Print phase details
-    print("\nPreparatory Phase (Minimum Knee Angle):")
-    print(preparatory_phase)
+    # returning phase details
+    return [preparatory_phase, release_phase]
 
-    print("\nRelease Phase (Maximum Elbow Angle):")
-    print(release_phase)
-
+'''
 # Example Usage
 video_path = "bbshot1.mp4"
-output_csv = "angles_output.csv"
 output_video = "basketball_shot_analysis.mp4"
-processVideo(video_path, output_csv, output_video)
+processVideo(video_path, output_video)
+'''
