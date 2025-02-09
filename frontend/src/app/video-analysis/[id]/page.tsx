@@ -11,6 +11,7 @@ import VideoUploadButton from "@/components/VideoUpload/VideoUploadButton";
 import VideoUploadCard from "@/components/VideoUpload/VideoUploadCard";
 import VideoCard from "@/components/VideoDisplay/VideoCard";
 import VideoDisplay from "@/components/VideoDisplay";
+import * as showdown from "showdown";
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,11 +19,16 @@ import { useEffect, useState } from "react";
 export default function Page() {
   const params = useParams<{ id: string }>();
   const [videoData, setVideoData] = useState<Job | void>(undefined);
+  const converter = new showdown.Converter();
   const fetchVideo = async (jobId: string) => {
     const data = await getVideo(jobId);
+    if (data?.recommendation) {
+      data.recommendation = converter.makeHtml(data.recommendation);
+    }
     setVideoData(data);
     console.log(data);
   };
+
   useEffect(() => {
     fetchVideo(params.id);
   }, []);
@@ -51,7 +57,11 @@ export default function Page() {
         </div>
         <div className="flex flex-col gap-4 row-start-2 items-center sm:items-start">
           <H2 className="text-3xl">Feedback</H2>
-          <Text>{videoData?.recommendation}</Text>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: videoData?.recommendation || "Nothing to show",
+            }}
+          ></div>
         </div>
       </div>
     </>
