@@ -10,28 +10,12 @@ export default async function VideoDisplay() {
 
   return (
     <>
-      <H2>Raw Footage</H2>
       <VideoBox>
         {data?.raw.map((video, i) => {
           return (
             <VideoCard path={video.video_path} job_id={video.job_id} key={i} />
           );
         })}
-      </VideoBox>
-
-      <H2>Processed Footage Footage</H2>
-      <VideoBox>
-        {data && data.processed.length > 0
-          ? data?.processed.map((video, i) => {
-              return (
-                <VideoCard
-                  path={video.video_path}
-                  job_id={video.job_id}
-                  key={i}
-                />
-              );
-            })
-          : "No videos to show."}
       </VideoBox>
     </>
   );
