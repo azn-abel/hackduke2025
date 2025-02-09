@@ -4,6 +4,8 @@ from fastapi import *
 import uuid
 import subprocess
 from fastapi.middleware.cors import CORSMiddleware
+from processing import *
+from response import *
 
 
 app = FastAPI()
@@ -31,7 +33,8 @@ def process_video(job_id: str):
     input_path = job["video_path"]
     # TODO: ADD PROCESSING video logic here 
     output_path = os.path.join(PROCESSED_VIDEO_DIR, f"{fileName}_processed.mp4")
-    # TODO: ADD PROCESSING video logic here 
+    processVideo(input_path, output_path)
+    # TODO: ADD PROCESSING video logic here
     recommendation = "hello"
 
 
